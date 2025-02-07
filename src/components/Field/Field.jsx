@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 // будет игровым полем с клетками, где каждая клетка представляет из себя кнопку. При нажатии на определенную клетку будет происходить ход одной из сторон;
 import styles from './field.module.css';
+import PropTypes from 'prop-types';
 
 const FieldLayout = ({ field, handlerField }) => {
 	return (
@@ -72,3 +73,13 @@ export const Field = ({
 
 	return <FieldLayout {...{ field, handlerField }} />;
 };
+
+Field.protoType = {
+	field: PropTypes.string,
+	currentPlayer: PropTypes.string,
+	setField: PropTypes.string,
+	setCurrentPlayer: PropTypes.string,
+	isGameEnded: PropTypes.bool,
+	setIsGameEnded: PropTypes.bool,
+	setIsDraw: PropTypes.bool,
+}
