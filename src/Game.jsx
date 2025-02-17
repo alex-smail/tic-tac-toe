@@ -1,24 +1,7 @@
-/* eslint-disable react/prop-types */
-import styles from './game.module.css';
-import { Field, Information } from './components';
 import { useState } from 'react';
-
-const GameLayout = ({ gameState, resetGame }) => {
-	return (
-		<>
-			<Information {...gameState} />
-			<Field {...gameState} />
-			<button
-				className={styles.endGame}
-				onClick={() => {
-					resetGame();
-				}}
-			>
-				Начать заново
-			</button>
-		</>
-	);
-};
+import { GameLayout } from './game-layout';
+import { handlerField, handleRestart } from './handlers';
+import { createEmptyField } from './utils';
 
 const Game = () => {
 	//кто ходит в данный момент, значениями может быть 'X' или '0'
@@ -28,7 +11,7 @@ const Game = () => {
 	//была ли ничья
 	const [isDraw, setIsDraw] = useState(false);
 	//массив клеток игрового поля, состоящий из 9 пустых строк (3x3)
-	const [field, setField] = useState(Array(9).fill(''));
+	const [field, setField] = useState(createEmptyField());
 
 	const gameState = {
 		currentPlayer,
@@ -41,14 +24,13 @@ const Game = () => {
 		setField,
 	};
 
-	const resetGame = () => {
-		setCurrentPlayer('X');
-		setIsGameEnded(false);
-		setIsDraw(false);
-		setField(Array(9).fill(''));
-	};
-
-	return <GameLayout gameState={gameState} resetGame={resetGame} />;
+	return (
+		<GameLayout
+			gameState={gameState}
+			handleRestart={() => handleRestart(gameState)}
+			handlerField={(index) => handlerField(gameState, index)}
+		/>
+	);
 };
 
 export default Game;

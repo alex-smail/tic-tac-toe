@@ -1,18 +1,9 @@
 /* eslint-disable react/prop-types */
 //будет выводить, чей на данный момент ход (крестика или нолика), либо информацию о победе одной из сторон;
-import styles from './information.module.css';
 import PropTypes from 'prop-types';
-
-const InformationLayout = ({ checkWinner }) => {
-	return (
-		<>
-			<div className={styles.dsc}>{checkWinner}</div>
-		</>
-	);
-};
+import { InformationLayout } from './information-layout';
 
 export const Information = ({ isDraw, isGameEnded, currentPlayer }) => {
-
 	const winner = (
 		<>
 			Победа: <span> {currentPlayer}</span>
@@ -35,4 +26,4 @@ Information.protoType = {
 	isDraw: PropTypes.bool,
 	currentPlayer: PropTypes.string,
 	isGameEnded: PropTypes.bool,
-}
+};
