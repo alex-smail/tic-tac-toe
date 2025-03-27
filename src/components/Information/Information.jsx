@@ -2,28 +2,21 @@
 //будет выводить, чей на данный момент ход (крестика или нолика), либо информацию о победе одной из сторон;
 import PropTypes from 'prop-types';
 import { InformationLayout } from './information-layout';
+import { PLAYER_ACTION, PLAYER_SIGN, STATUS } from '../../constants';
 
-export const Information = ({ isDraw, isGameEnded, currentPlayer }) => {
-	const winner = (
-		<>
-			Победа: <span> {currentPlayer}</span>
-		</>
-	);
+export const Information = ({ state }) => {
+	const { status, currentPlayer } = state;
 
-	const toGoPlayer = (
-		<>
-			Ходит: <span>{currentPlayer}</span>
-		</>
-	);
+	const playerAction = PLAYER_ACTION[status];
+	const playerName = PLAYER_SIGN[currentPlayer];
 
-	const isWinnerOrNot = isGameEnded ? winner : toGoPlayer;
-	const checkWinner = isDraw ? 'Ничья' : isWinnerOrNot;
+	const information =
+		status === STATUS.DRAW ? 'Ничья' : `${playerAction}: ${playerName}`;
 
-	return <InformationLayout {...{ checkWinner }} />;
+	return <InformationLayout information={information} />;
 };
 
 Information.protoType = {
-	isDraw: PropTypes.bool,
 	currentPlayer: PropTypes.string,
-	isGameEnded: PropTypes.bool,
+	status: PropTypes.string,
 };

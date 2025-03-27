@@ -1,36 +1,27 @@
-import { WIN_PATTERNS } from '../constants'
+import { PLAYER, STATUS } from '../constants';
+import { setCurrentPlayer, setField, setStatus, store } from '../store';
+import { checkEmptyCell, checkWin } from '../utils';
 
-export const handlerField = ({
-	field,
-	currentPlayer,
-	setField,
-	setCurrentPlayer,
-	isGameEnded,
-	setIsGameEnded,
-	setIsDraw,
-}, index) => {
-	if (isGameEnded || field[index] !== '') return;
+export const handlerField = ({ field, status, currentPlayer }, index) => {
+	if (
+		status === STATUS.WIN ||
+		status === STATUS.DRAW ||
+		field[index] !== PLAYER.NOBODY
+	)
+		return;
 
 	// обновляем игровое ПОЛЕ
 	const newField = [...field];
 	newField[index] = currentPlayer;
-	setField(newField);
+	store.dispatch(setField(newField));
 
-	// проверяем есть ли ПОБЕДИТЕЛЬ
-	const isWinner = WIN_PATTERNS.some((arr) =>
-		arr.every((cell) => newField[cell] === currentPlayer)
-	);
-
-	if (isWinner) {
-		setIsGameEnded(true);
-		return;
+	if (checkWin(newField, currentPlayer)) {
+		store.dispatch(setStatus(STATUS.WIN));
+	} else if (checkEmptyCell(newField)) {
+		store.dispatch(setStatus(STATUS.DRAW));
+	} else {
+		const nextPlayer =
+			currentPlayer === PLAYER.CROSS ? PLAYER.NOUGHT : PLAYER.CROSS;
+		store.dispatch(setCurrentPlayer(nextPlayer));
 	}
-
-	// проверяем на НИЧЬЮ
-	const eachFieldTrue = newField.every(
-		(currentCell) => currentCell !== ''
-	);
-	if (eachFieldTrue) setIsDraw(true);
-
-	setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
 };

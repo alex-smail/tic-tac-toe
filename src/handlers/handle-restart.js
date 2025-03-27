@@ -1,13 +1,3 @@
-import { createEmptyField } from '../utils';
+import { setRestartGame, store } from '../store';
 
-export const handleRestart = ({
-	setCurrentPlayer,
-	setIsGameEnded,
-	setIsDraw,
-	setField,
-}) => {
-	setCurrentPlayer('X');
-	setIsGameEnded(false);
-	setIsDraw(false);
-	setField(createEmptyField());
-};
+export const handleRestart = () => store.dispatch(setRestartGame());

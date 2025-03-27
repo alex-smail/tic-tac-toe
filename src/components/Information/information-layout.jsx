@@ -1,10 +1,10 @@
-/* eslint-disable react/prop-types */
+import PropTypes from 'prop-types';
 import styles from './information.module.css';
 
-export const InformationLayout = ({ checkWinner }) => {
-	return (
-		<>
-			<div className={styles.dsc}>{checkWinner}</div>
-		</>
-	);
+export const InformationLayout = ({ information }) => (
+	<div className={styles.dsc}>{information}</div>
+);
+
+InformationLayout.propTypes = {
+	information: PropTypes.string,
 };
