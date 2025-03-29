@@ -2,7 +2,7 @@ import { PLAYER, STATUS } from '../constants';
 import { setCurrentPlayer, setField, setStatus, store } from '../store';
 import { checkEmptyCell, checkWin } from '../utils';
 
-export const handlerField = ({ field, status, currentPlayer }, index) => {
+export const handlerField = ( field, status, currentPlayer, index) => {
 	if (
 		status === STATUS.WIN ||
 		status === STATUS.DRAW ||

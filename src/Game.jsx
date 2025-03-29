@@ -14,7 +14,7 @@ const Game = () => {
 	}, []);
 
 	return (
-		<GameLayout state={state} />
+		<GameLayout />
 	);
 };
 
