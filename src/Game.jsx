@@ -1,21 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { GameLayout } from './game-layout';
-import { store } from './store';
 
 const Game = () => {
-	const [state, setState] = useState(store.getState());
+	const dispatch = useDispatch();
 
-	useEffect(() => {
-		const unsubscribe = store.subscribe(() => {
-			setState(store.getState());
-		});
-
-		return () => unsubscribe();
-	}, []);
-
-	return (
-		<GameLayout />
-	);
+	return <GameLayout dispatch={dispatch}/>;
 };
 
 export default Game;

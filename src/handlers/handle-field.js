@@ -1,8 +1,9 @@
 import { PLAYER, STATUS } from '../constants';
-import { setCurrentPlayer, setField, setStatus, store } from '../store';
+import { setCurrentPlayer, setField, setStatus } from '../store';
 import { checkEmptyCell, checkWin } from '../utils';
 
-export const handlerField = ( field, status, currentPlayer, index) => {
+export const handlerField = ( field, status, currentPlayer, index, dispatch) => {
+
 	if (
 		status === STATUS.WIN ||
 		status === STATUS.DRAW ||
@@ -13,15 +14,15 @@ export const handlerField = ( field, status, currentPlayer, index) => {
 	// обновляем игровое ПОЛЕ
 	const newField = [...field];
 	newField[index] = currentPlayer;
-	store.dispatch(setField(newField));
+	dispatch(setField(newField));
 
 	if (checkWin(newField, currentPlayer)) {
-		store.dispatch(setStatus(STATUS.WIN));
+		dispatch(setStatus(STATUS.WIN));
 	} else if (checkEmptyCell(newField)) {
-		store.dispatch(setStatus(STATUS.DRAW));
+		dispatch(setStatus(STATUS.DRAW));
 	} else {
 		const nextPlayer =
 			currentPlayer === PLAYER.CROSS ? PLAYER.NOUGHT : PLAYER.CROSS;
-		store.dispatch(setCurrentPlayer(nextPlayer));
+		dispatch(setCurrentPlayer(nextPlayer));
 	}
 };

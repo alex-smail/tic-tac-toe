@@ -1,3 +1,3 @@
-import { setRestartGame, store } from '../store';
+import { setRestartGame } from '../store';
 
-export const handleRestart = () => store.dispatch(setRestartGame());
+export const handleRestart = (dispatch) => dispatch(setRestartGame());
