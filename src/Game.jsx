@@ -1,10 +1,15 @@
-import { useDispatch } from 'react-redux';
+import { Component } from 'react';
 import { GameLayout } from './game-layout';
+import { connect } from 'react-redux';
 
-const Game = () => {
-	const dispatch = useDispatch();
+export class GameContainer extends Component {
+	render() {
+		const { dispatch } = this.props;
 
-	return <GameLayout dispatch={dispatch}/>;
-};
+		return <GameLayout dispatch={dispatch} />;
+	}
+}
+
+const Game = connect()(GameContainer);
 
 export default Game;
